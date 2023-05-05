@@ -18,9 +18,12 @@ import Typography from '@mui/material/Typography';
 import CustomButton from './button';
 import AccountDrawer from './accountDrawer';
 import CustomAvatar from './avatar';
+import Search from './search';
 
 const drawerWidth = 240;
-
+interface LayoutProps {
+  children: React.ReactNode;
+}
 interface Props {
   /**
    * Injected by the documentation to work in an iframe.
@@ -31,10 +34,11 @@ interface Props {
 function handleClickOpenMpdal() {
     console.log('Button clicked');
   }
-export default function ResponsiveDrawer(props: Props) {
-  const { window } = props;
+export default function ResponsiveDrawer({ children }: LayoutProps) {
+  // const { window } = props;
   const [mobileOpen, setMobileOpen] =useState(false);
   const [rightDrawerOpen, setRightDrawerOpen] = useState(false);
+  const [date, setDate] = useState(new Date().toLocaleDateString()); // استفاده از state برای نمایش زمان جاری
 
   const handleDrawerToggle = () => {
     setRightDrawerOpen(false)
@@ -44,7 +48,11 @@ export default function ResponsiveDrawer(props: Props) {
     setMobileOpen(false);
     setRightDrawerOpen(!rightDrawerOpen)
   };
-
+  const handleSearch = (searchTerm: string) => {
+    console.log(`Searching for ${searchTerm}...`);
+    // Do something with the search term...
+  };
+ 
   const drawer = (
     <div >
       <Toolbar sx={{display:'flex',justifyContent:'center'}}> <p className="flex  items-center justify-center text-lg font-semibold text-slate-900">to do list</p></Toolbar>
@@ -71,7 +79,7 @@ export default function ResponsiveDrawer(props: Props) {
     </div>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  // const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -79,12 +87,13 @@ export default function ResponsiveDrawer(props: Props) {
       <AppBar
         position="fixed"
         sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
+          // width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { md: `${drawerWidth}px` },
           backgroundColor:'inherit',
           display:'flex',
           justifyContent:'space-between',
-          flexDirection:'row'
+          flexDirection:'row',
+          boxShadow:'none'
         }}
       >
         <Toolbar>
@@ -93,19 +102,20 @@ export default function ResponsiveDrawer(props: Props) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr: 2, display: { sm: 'block' } }}
           >
             <MenuIcon />
           </IconButton>
         </Toolbar>
         <Toolbar>
-         <ButtonBase sx={{my:1 ,display: {xs:'block', sm:'none'}}}>
+         <Search onSearch={handleSearch}/>
+         <p className='text-slate-500 mx-1'>{date}</p>
+        </Toolbar>
+        <Toolbar>
+         <ButtonBase onClick={handleDrawerRightToggle} sx={{my:1 ,display: { sm:'block'}}}>
             <CustomAvatar src='./avatar.png' />
         </ButtonBase>
         </Toolbar>    
-          
-          
-        
       </AppBar>
       <Box
         component="nav"
@@ -115,7 +125,7 @@ export default function ResponsiveDrawer(props: Props) {
       
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-          container={container}
+          // container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
@@ -123,17 +133,33 @@ export default function ResponsiveDrawer(props: Props) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
+            display: { xs: 'block', md: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
         >
           {drawer}
         </Drawer>
+        <Drawer
+          // container={container}
+          variant="temporary"
+          open={rightDrawerOpen}
+          onClose={handleDrawerRightToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: 'block', md: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+          anchor="right"
+        >
+         <AccountDrawer/>
+        </Drawer>
        
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', sm: 'block' },
+            display: { xs: 'none', md: 'block' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
           open
@@ -143,7 +169,7 @@ export default function ResponsiveDrawer(props: Props) {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', sm: 'block' },
+            display: { xs: 'none', md: 'block' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
           open
@@ -151,6 +177,9 @@ export default function ResponsiveDrawer(props: Props) {
         >
           <AccountDrawer/>
         </Drawer>
+      </Box>
+      <Box component='main' sx={{marginTop:'66px '}} >
+        {children}
       </Box>
      
     </Box>
