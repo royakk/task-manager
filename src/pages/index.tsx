@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import ResponsiveDrawer from '@/components/sidbar'
 // import Layout from '@/components/layout'
 import Search from '@/components/search'
+import CardTaskItem from '@/components/taskComponent/taskItem'
 
 const inter = Inter({ subsets: ['latin'] })
 const handleSearch = (searchTerm: string) => {
@@ -18,7 +19,7 @@ export default function Home() {
     // </main>
     // <ResponsiveDrawer/>
     <ResponsiveDrawer>
-       <Search onSearch={handleSearch}/>
+      <CardTaskItem/>
     </ResponsiveDrawer>
   )
 }
