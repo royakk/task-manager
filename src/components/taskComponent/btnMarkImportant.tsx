@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Task } from '@/interfaces';
 import StarIcon from '@mui/icons-material/Star';
 type Props = {
-    taskId: string;
-    taskImportant: boolean;
+    taskId?: string;
+    taskImportant?: boolean;
   };
   
-  const BtnMarkAsImportant: React.FC<Props> = ({ taskId, taskImportant }) => {
+  const BtnMarkAsImportant: React.FC<Props> = ({ taskId, taskImportant}) => {
   
     const markAsImportantHandler = () => {
     };
@@ -16,7 +16,7 @@ type Props = {
         title={taskImportant ? 'unmark as important' : 'mark as important'}
         onClick={markAsImportantHandler}
         className='transition hover:text-slate-700 dark:hover:text-slate-200 ml-auto'>
-        <StarIcon sx={{ color: taskImportant ? 'secondary' : 'action' }}/>
+        <StarIcon color={taskImportant ? 'secondary' : 'action'}/>
       </button>
     );
   };

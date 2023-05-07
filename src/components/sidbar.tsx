@@ -1,4 +1,4 @@
-import  React,{useState} from 'react';
+import  React,{useState,useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -38,8 +38,10 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
   // const { window } = props;
   const [mobileOpen, setMobileOpen] =useState(false);
   const [rightDrawerOpen, setRightDrawerOpen] = useState(false);
-  const [date, setDate] = useState(new Date().toLocaleDateString()); // استفاده از state برای نمایش زمان جاری
-
+  const [date, setDate] = useState(''); // استفاده از state برای نمایش زمان جاری
+  useEffect(() => {
+    setDate(new Date().toLocaleDateString());
+  }, []);
   const handleDrawerToggle = () => {
     setRightDrawerOpen(false)
     setMobileOpen(!mobileOpen);

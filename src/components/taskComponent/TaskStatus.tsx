@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Task } from '@/interfaces';
 import BtnDelete from './btnDelete';
+import BtnEdite from './editTask';
 
-const taskAction = ({ task }: { task?: Task }): JSX.Element => {
+const TaskStatus = ({ task }: { task?: Task }): JSX.Element => {
   const [isCompleted, setIsCompleted] = useState(false);
   const buttonClassName = isCompleted
-    ? 'w-full rounded-md bg-rose-300 text-white p-2'
-    : 'w-full rounded-md text-green-800 bg-green-400 p-2';
+    ? 'rounded-md bg-rose-300 text-white p-2'
+    : 'rounded-md text-green-800 bg-green-400 p-2';
   const handleComplete = () => {
     setIsCompleted(!isCompleted);
   };
@@ -16,12 +17,12 @@ const taskAction = ({ task }: { task?: Task }): JSX.Element => {
         <button className={buttonClassName} onClick={handleComplete}>
           {task?.completed}
         </button>
-        <div>
-            <BtnDelete/>
+        <div className='flex justify-between'>
+           
         </div>
       </div>
     </>
   );
 };
 
-export default taskAction;
+export default React.memo(TaskStatus) ;

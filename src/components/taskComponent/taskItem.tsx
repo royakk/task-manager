@@ -3,11 +3,15 @@ import Divider from '@mui/material/Divider';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import TaskAction from './taskAction';
+import TaskAction from './TaskStatus';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Task } from '@/interfaces';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import TaskStatus from './TaskStatus';
+import BtnMarkImportant from './btnMarkImportant';
+import BtnDelete from './btnDelete';
+import BtnEdite from './editTask'
 export default function CardTaskItem ({ task }: { task?: Task }) {
   return (
     <Card sx={{ minWidth: 275 }}>
@@ -20,8 +24,13 @@ export default function CardTaskItem ({ task }: { task?: Task }) {
       </div>
       </CardContent>
       <Divider  variant="middle"/>
-      <CardActions>
-        <TaskAction/>
+      <CardActions sx={{display:'flex',justifyContent:'space-between'}}>
+        <TaskStatus/>
+        <div className='flex justify-between'>
+          <BtnMarkImportant/>
+          <BtnDelete/>
+          <BtnEdite/>
+        </div>
       </CardActions>
     </Card>
   );
