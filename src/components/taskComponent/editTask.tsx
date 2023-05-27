@@ -9,9 +9,11 @@ type Props = {
 
 const BtnEdite: React.FC<Props> = ({ taskId }) => {
   const [showModal, setIsModalShown] = useState<boolean>(false);
-  const taskDeleteHandler = () => {};
-  const removeTaskHandler = () => {
-    alert("edite");
+  const editTaskHandler = () => {
+    if (taskId){
+
+    }
+   
   };
   const handleClose = () => {
     setIsModalShown(false);
@@ -21,7 +23,8 @@ const BtnEdite: React.FC<Props> = ({ taskId }) => {
       <ModalAddTask
         isOpen={showModal}
         onClose={handleClose}
-        onConfirm={removeTaskHandler}
+        onConfirm={editTaskHandler}
+        taskId = {taskId}
       />
       <button
         onClick={() => setIsModalShown(true)}

@@ -25,10 +25,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
+
   window?: () => Window;
 }
 function handleClickOpenMpdal() {
@@ -90,8 +87,8 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
         position="fixed"
         sx={{
           // width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { md: `${drawerWidth}px` },
-          backgroundColor:'inherit',
+          // ml: { md: `${drawerWidth}px` },
+          backgroundColor:'#f5f5f5',
           display:'flex',
           justifyContent:'space-between',
           flexDirection:'row',
@@ -121,7 +118,7 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
       </AppBar>
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{ width: { md: drawerWidth }, flexShrink: { sm: 0 } }}
        
       >
       
@@ -180,7 +177,7 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
           <AccountDrawer/>
         </Drawer>
       </Box>
-      <Box component='main' sx={{marginTop:'66px '}} >
+      <Box component='main' sx={{marginTop:'66px ',padding:2,display:'flex',justifyContent:'center'}} >
         {children}
       </Box>
      

@@ -21,9 +21,10 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   onConfirm:() =>void;
+  taskId?: string;
 }
 
-export default function ModalAddTask({ isOpen, onClose ,onConfirm}: Props) {
+export default function ModalAddTask({ isOpen, onClose ,onConfirm,taskId}: Props) {
 const handleConfirm =() =>{
     onConfirm();
     onClose();
@@ -36,7 +37,7 @@ const handleConfirm =() =>{
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <AddEditTask onClose={onClose} onConfirm={onConfirm}/>
+        <AddEditTask taskId={taskId} onClose={onClose} onConfirm={onConfirm}/>
       </Box>
     </Modal>
   );

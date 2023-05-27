@@ -6,8 +6,8 @@ import BtnEdite from './editTask';
 const TaskStatus = ({ task }: { task?: Task }): JSX.Element => {
   const [isCompleted, setIsCompleted] = useState(false);
   const buttonClassName = isCompleted
-    ? 'rounded-md bg-rose-300 text-white p-2'
-    : 'rounded-md text-green-800 bg-green-400 p-2';
+    ? 'rounded-md text-green-800 bg-green-400 p-2'
+    : 'rounded-md bg-rose-300 text-white p-2' ;
   const handleComplete = () => {
     setIsCompleted(!isCompleted);
   };
@@ -15,7 +15,7 @@ const TaskStatus = ({ task }: { task?: Task }): JSX.Element => {
     <>
       <div className="flex justify-between ...">
         <button className={buttonClassName} onClick={handleComplete}>
-          {task?.completed}
+          {isCompleted ? 'completed' :'unComoleted'}
         </button>
         <div className='flex justify-between'>
            

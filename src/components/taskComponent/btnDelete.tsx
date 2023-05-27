@@ -2,15 +2,20 @@ import React, { useState } from "react";
 import { Task } from "@/interfaces";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModalConfirm from "../modal/modalConfirm";
+import { tasksActions } from '../../store/taskSlice';
+import store, { useAppDispatch , useAppSelector } from "@/store/store";
 type Props = {
   taskId?: string;
 };
 
 const BtnDelete: React.FC<Props> = ({ taskId }) => {
   const [showModal, setIsModalShown] = useState<boolean>(false);
-  const taskDeleteHandler = () => {};
+  const dispatch = useAppDispatch();
+  const delet = useAppSelector(store => store.tasks.tasks)
+  
   const removeTaskHandler = () => {
-    alert("delete");
+    dispatch(tasksActions.removeTask(taskId))
+
   };
   const handleClose = () => {
     setIsModalShown(false);
