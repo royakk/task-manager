@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { tasksActions, getEditTask } from '../../store/taskSlice';
 import { v4 as uuidv4 } from 'uuid';
+import { Task } from "@/interfaces";
 
 interface MyFormValues {
   title: string;
@@ -31,7 +32,7 @@ const MyFormSchema = Yup.object().shape({
 });
 
 const AddEditTask = ({ isEdit, onClose, onConfirm, taskId }: Props) => {
-  const editTask = useAppSelector(getEditTask(taskId));
+  const editTask :Task | undefined = useAppSelector(getEditTask(taskId));
   console.log("edittaskkk", editTask);
 
   const dispatch = useAppDispatch();
@@ -136,7 +137,7 @@ const AddEditTask = ({ isEdit, onClose, onConfirm, taskId }: Props) => {
                 </div>
               </div>
               <button type="submit" className="bg-violet-700 text-white py-2 px-4 rounded-lg">
-                {isEdit ? 'edit task' : 'add task'}
+                {taskId ? 'edit task' : 'add task'}
               </button>
             </Form>
           )}

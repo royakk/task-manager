@@ -25,7 +25,7 @@ export default function CardTaskItem ({ task }: { task: Task }) {
       </CardContent>
       <Divider  variant="middle"/>
       <CardActions sx={{display:'flex',justifyContent:'space-between',mt:2}}>
-        <TaskStatus task={task}/>
+        <TaskStatus taskId={task.id}/>
         <div className='flex justify-between'>
           <BtnMarkImportant taskImportant={task.important} taskId={task.id}/>
           <BtnDelete taskId={task.id}/>

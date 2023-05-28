@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Task } from '@/interfaces';
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from './store';
+import { type } from 'os';
+import { stat } from 'fs';
 
 
 const getTasks = (state: RootState): Task[] => state.tasks.tasks;
@@ -31,10 +33,16 @@ const getTasks = (state: RootState): Task[] => state.tasks.tasks;
       id: 't3'
     },
   ];
-
-  const initialState: { tasks: Task[] } = {
+  const initialState: {
+    tasks: Task[],
+    showImportant: boolean | undefined,
+    showComplete: boolean | undefined,
+    showAll: boolean | undefined,
+  } = {
     tasks: (typeof window !== 'undefined' && localStorage.getItem('tasks')) ? JSON.parse(localStorage.getItem('tasks')!) : defaultTasks,
-   
+    showImportant: undefined,
+    showComplete: undefined,
+    showAll: undefined
   };
 
   const tasksSlice=createSlice({
@@ -66,6 +74,21 @@ const getTasks = (state: RootState): Task[] => state.tasks.tasks;
           deleteAllData(state) {
             state.tasks = [];
           },
+          toggleShowImportant(state){
+            state.showImportant = true;
+            state.showComplete = false;
+            state.showAll =false;
+          },
+          toggleShowComplete(state){
+            state.showImportant = false;
+            state.showComplete = true;
+            state.showAll =false;
+          },
+          toggleShowAll(state){
+            state.showImportant = false;
+            state.showComplete = false;
+            state.showAll =true;
+          }
     }
   })
 

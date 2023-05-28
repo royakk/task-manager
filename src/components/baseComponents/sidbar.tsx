@@ -5,11 +5,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { ButtonBase } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -19,7 +17,9 @@ import CustomButton from './button';
 import AccountDrawer from './accountDrawer';
 import CustomAvatar from './avatar';
 import Search from './search';
-
+import { sidbarItems } from '@/data/sidbarItems';
+import { tasksActions, getEditTask } from '../../store/taskSlice';
+import { useAppDispatch, useAppSelector } from "@/store/store";
 const drawerWidth = 240;
 interface LayoutProps {
   children: React.ReactNode;
@@ -36,8 +36,14 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
   const [mobileOpen, setMobileOpen] =useState(false);
   const [rightDrawerOpen, setRightDrawerOpen] = useState(false);
   const [date, setDate] = useState(''); // استفاده از state برای نمایش زمان جاری
+  const dispatch = useAppDispatch();
+  const testtoggle=  useAppSelector(store => store.tasks)
+  console.log("toglle",testtoggle);
+  
   useEffect(() => {
     setDate(new Date().toLocaleDateString());
+    dispatch(tasksActions.toggleShowAll())
+
   }, []);
   const handleDrawerToggle = () => {
     setRightDrawerOpen(false)
@@ -51,7 +57,30 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
     console.log(`Searching for ${searchTerm}...`);
     // Do something with the search term...
   };
- 
+ const handleClickItem= (item : number)=>{
+  switch (item) {
+    case 1:
+      dispatch(tasksActions.toggleShowAll())
+      console.log("trrrrrr",testtoggle);
+
+      break;
+    case 2:
+      dispatch(tasksActions.toggleShowImportant())
+      console.log("trrrrrr",testtoggle);
+
+      break;
+    case 3:
+      dispatch(tasksActions.toggleShowComplete())
+      console.log("trrrrrr",testtoggle);
+
+      break;
+    default:
+      dispatch(tasksActions.toggleShowAll())
+      console.log("trrrrrr",testtoggle);
+      
+      break;
+  }
+ }
   const drawer = (
     <div >
       <Toolbar sx={{display:'flex',justifyContent:'center'}}> <p className="flex  items-center justify-center text-lg font-semibold text-slate-900">to do list</p></Toolbar>
@@ -60,16 +89,18 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
      </div>
       <Divider />
       <List>
-        {['all tasks', 'important tasks', ' complete tasks', 'unComplete tasks'].map((text, index) => (
-          <ListItem  key={text} disablePadding>
+        {sidbarItems.map((item, index) => (
+          <ListItem  key={item.id} disablePadding>
             <ListItemButton sx={{
                 '& .selected': {
                     backgroundColor: 'red',
                 },
                 
-            }} >
+            }} 
+            onClick={() => handleClickItem(item.id)}
+            >
               
-              <ListItemText primary={text} />
+              <ListItemText primary={item.title} />
             </ListItemButton>
           </ListItem>
         ))}
