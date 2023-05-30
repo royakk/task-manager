@@ -23,9 +23,8 @@ export default function Home() {
       
     // </main>
     // <ResponsiveDrawer/>
-    <ResponsiveDrawer>
       <Main/>
-    </ResponsiveDrawer>
+    
     // <Form1/>
 
     
