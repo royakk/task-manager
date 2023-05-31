@@ -36,6 +36,7 @@ const TemporaryDrawer: React.FC<TemporaryDrawerProps> = ({ open, onClose }) => {
         break;
       case 4:
         dispatch(tasksActions.toggleShowUnComplete());
+        onClose()
         break;
       default:
         dispatch(tasksActions.toggleShowAll());

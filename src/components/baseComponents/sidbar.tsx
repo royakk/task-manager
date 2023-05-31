@@ -103,7 +103,7 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
 
 
   return (
-    <Box sx={{ display: "flex" ,justifyContent:{xs:'center'}}}>
+    <Box sx={{ display: "flex" ,justifyContent:'center'}}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -129,9 +129,12 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
           </IconButton>
         </Toolbar>
         <Toolbar sx={{width:'400px'}}>
-          <Search
-          />
-          <p className="text-slate-500 mx-3">{date}</p>
+          <Search/>
+          <Box
+           sx={{display: { xs: "none" ,sm:'block'} }}
+          >
+            <p className="text-slate-500 mx-3">{date}</p></Box>
+          
         </Toolbar>
         <Toolbar>
           <ButtonBase

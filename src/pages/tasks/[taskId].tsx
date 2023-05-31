@@ -18,11 +18,11 @@ export default function TaskItemPage() {
   }
 
   return (
-    <>
-    <div className='grid sm:grid-cols-2 md:grid-cols-3 gap-4 items-center'>
-      <CardTaskItem task={getTaskById} />
-      <NewTaskArea />
+    <div className="flex justify-center">
+      <div className='grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 items-center'>
+        <CardTaskItem task={getTaskById} />
+        <NewTaskArea />
       </div>
-    </>
+    </div>
   );
 }
