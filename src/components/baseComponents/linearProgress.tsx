@@ -1,29 +1,26 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
+import { useAppSelector } from '@/store/store';
+import { getUncompleteTasks } from '@/store/taskSlice';
+import { Task } from '@/interfaces';
 
 export default function LinearDeterminate() {
-  const [progress, setProgress] = React.useState(0);
-
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((oldProgress) => {
-        if (oldProgress === 100) {
-          return 0;
-        }
-        const diff = Math.random() * 10;
-        return Math.min(oldProgress + diff, 100);
-      });
-    }, 500);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+  const tasks: Task[] = useAppSelector(({ tasks }) => tasks.tasks);
+  const uncompleteTasks: Task[] = useAppSelector(getUncompleteTasks);
+  const calcComplete = tasks.length - uncompleteTasks.length;
+  const percentage = Math.round((calcComplete / tasks.length) * 100);
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <LinearProgress variant="determinate" value={progress} />
-    </Box>
+    <div className="w-full flex flex-col p-3">
+      <div className="w-full flex justify-between">
+        <p>All tasks</p>
+        <p>{calcComplete} / {tasks.length}</p>
+      </div>
+
+      <Box sx={{ width: '100%' }}>
+        <LinearProgress variant="determinate" value={percentage} />
+      </Box>
+    </div>
   );
 }

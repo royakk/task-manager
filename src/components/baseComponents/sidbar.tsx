@@ -22,20 +22,15 @@ import { tasksActions, getEditTask } from "../../store/taskSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import TemporaryDrawer from "./drawerTemporary";
 import RightDrawer from "./rightDrawer";
+import LinearDeterminate from "./linearProgress";
+import BtnDeleteAll from "./btnDeleteAll";
 
-
-const drawerWidth = 240;
+const drawerWidth = 220;
 interface LayoutProps {
   children: React.ReactNode;
 }
-interface Props {
-  window?: () => Window;
-}
-function handleClickOpenMpdal() {
-  console.log("Button clicked");
-}
+
 export default function ResponsiveDrawer({ children }: LayoutProps) {
-  // const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [rightDrawerOpen, setRightDrawerOpen] = useState(false);
   const [date, setDate] = useState(""); // استفاده از state برای نمایش زمان جاری
@@ -55,10 +50,7 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
     setMobileOpen(false);
     setRightDrawerOpen(!rightDrawerOpen);
   };
-  const handleSearch = (searchTerm: string) => {
-    console.log(`Searching for ${searchTerm}...`);
-    // Do something with the search term...
-  };
+  
   const handleClickItem = (item: number) => {
     switch (item) {
       case 1:
@@ -69,6 +61,9 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
         break;
       case 3:
         dispatch(tasksActions.toggleShowComplete());
+        break;
+      case 4:
+        dispatch(tasksActions.toggleShowUnComplete());
         break;
       default:
         dispatch(tasksActions.toggleShowAll());
@@ -84,7 +79,7 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
         </p>
       </Toolbar>
       <div className="flex items-center justify-center my-3">
-        <CustomButton label="add new task" onClick={handleClickOpenMpdal} />
+        <CustomButton label="add new task" />
       </div>
       <Divider />
       <List>
@@ -106,17 +101,16 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
     </div>
   );
 
-  // const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex" ,justifyContent:{xs:'center'}}}>
       <CssBaseline />
       <AppBar
         position="fixed"
         sx={{
           // width: { sm: `calc(100% - ${drawerWidth}px)` },
           // ml: { md: `${drawerWidth}px` },
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#e3e6fa",
           display: "flex",
           justifyContent: "space-between",
           flexDirection: "row",
@@ -134,11 +128,10 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
             <MenuIcon />
           </IconButton>
         </Toolbar>
-        <Toolbar>
-          <Search 
-          // onSearch={handleSearch}
-           />
-          <p className="text-slate-500 mx-1">{date}</p>
+        <Toolbar sx={{width:'400px'}}>
+          <Search
+          />
+          <p className="text-slate-500 mx-3">{date}</p>
         </Toolbar>
         <Toolbar>
           <ButtonBase
@@ -151,11 +144,9 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
       </AppBar>
       <Box
         component="nav"
-        sx={{ width: { md: drawerWidth }, flexShrink: { sm: 0 } }}
       >
-         <TemporaryDrawer open={mobileOpen} onClose={handleDrawerToggle} />
-         <RightDrawer open={rightDrawerOpen} onClose={handleDrawerRightToggle} />
-
+        <TemporaryDrawer open={mobileOpen} onClose={handleDrawerToggle} />
+        <RightDrawer open={rightDrawerOpen} onClose={handleDrawerRightToggle} />
 
         <Drawer
           variant="permanent"
@@ -164,6 +155,7 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: "#ebe6fc",
             },
           }}
           open
@@ -176,13 +168,25 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
             display: { xs: "none", md: "block" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
-              width: drawerWidth,
+              width: "200px",
+              backgroundColor: "#ebe6fc",
             },
           }}
           open
           anchor="right"
         >
           <AccountDrawer />
+          <LinearDeterminate />
+
+          <BtnDeleteAll />
+          <a
+            target="_blank"
+            href="https://github.com/royakk"
+            className="mt-4 bg-violet-200 p-2 rounded-md text-violet-900 text-center transition hover:bg-rose-200 dark:text-slate-200"
+            rel="noreferrer"
+          >
+            Projected by Roya Karimi
+          </a>
         </Drawer>
       </Box>
       <Box
@@ -190,8 +194,8 @@ export default function ResponsiveDrawer({ children }: LayoutProps) {
         sx={{
           marginTop: "66px ",
           padding: 2,
-          display: "flex",
-          justifyContent: "center",
+          // display: "flex",
+          // justifyContent: "center",
         }}
       >
         {children}

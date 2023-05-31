@@ -37,12 +37,14 @@ const getTasks = (state: RootState): Task[] => state.tasks.tasks;
     tasks: Task[],
     showImportant: boolean | undefined,
     showComplete: boolean | undefined,
+    showUnComplete: boolean | undefined,
     showAll: boolean | undefined,
   } = {
     tasks: (typeof window !== 'undefined' && localStorage.getItem('tasks')) ? JSON.parse(localStorage.getItem('tasks')!) : defaultTasks,
     showImportant: undefined,
     showComplete: undefined,
-    showAll: undefined
+    showUnComplete: undefined,
+    showAll: undefined,
   };
 
   const tasksSlice=createSlice({
@@ -78,15 +80,26 @@ const getTasks = (state: RootState): Task[] => state.tasks.tasks;
             state.showImportant = true;
             state.showComplete = false;
             state.showAll =false;
+            state.showUnComplete= false
+
+          },
+          toggleShowUnComplete(state){
+            state.showUnComplete= true
+            state.showImportant = false;
+            state.showComplete = false;
+            state.showAll =false;
           },
           toggleShowComplete(state){
             state.showImportant = false;
             state.showComplete = true;
             state.showAll =false;
+            state.showUnComplete= false
+
           },
           toggleShowAll(state){
             state.showImportant = false;
             state.showComplete = false;
+            state.showUnComplete= false
             state.showAll =true;
           }
     }
@@ -97,6 +110,10 @@ const getTasks = (state: RootState): Task[] => state.tasks.tasks;
   export const getCompletedTasks = createSelector(
     [getTasks],
     (tasks: Task[]) => tasks.filter(task => task.completed),
+  );
+  export const getUncompleteTasks = createSelector(
+    [getTasks],
+    (tasks: Task[]) => tasks.filter(task => !task.completed),
   );
   export const getImportantTasks = createSelector(
     [getTasks],

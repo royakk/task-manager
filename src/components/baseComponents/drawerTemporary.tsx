@@ -14,9 +14,7 @@ interface TemporaryDrawerProps {
   open: boolean;
   onClose: () => void;
 }
-function handleClickOpenMpdal() {
-    console.log("Button clicked");
-  }
+
 const TemporaryDrawer: React.FC<TemporaryDrawerProps> = ({ open, onClose }) => {
   const dispatch = useAppDispatch();
 
@@ -35,6 +33,9 @@ const TemporaryDrawer: React.FC<TemporaryDrawerProps> = ({ open, onClose }) => {
       case 3:
         dispatch(tasksActions.toggleShowComplete());
         onClose()
+        break;
+      case 4:
+        dispatch(tasksActions.toggleShowUnComplete());
         break;
       default:
         dispatch(tasksActions.toggleShowAll());
@@ -65,7 +66,7 @@ const TemporaryDrawer: React.FC<TemporaryDrawerProps> = ({ open, onClose }) => {
         </p>
       </Toolbar>
       <div className="flex items-center justify-center my-3">
-        <CustomButton label="add new task" onClick={handleClickOpenMpdal} />
+        <CustomButton label="add new task" />
       </div>
       <Divider />
       <List>
